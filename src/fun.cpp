@@ -6,63 +6,70 @@
 
 unsigned int faStr1(const char *str) {
  unsigned int count = 0;
-    const char* word = strtok(const_cast<char*>(str), " ");
+	char* strCopy = new char[strlen(str) + 1];
+	strcpy(strCopy, str);
 
-    while (word != NULL) {
-        bool valid = true;
-        for (int i = 0; i < strlen(word); i++) {
-            if (isdigit(word[i])) {
-                valid = false;
-                break;
-            }
-        }
+	char* word = strtok(strCopy, " ");
 
-        if (valid) {
-            count++;
-        }
+	while (word != NULL) {
+		bool valid = true;
+		for (size_t i = 0; i < strlen(word); i++) {
+			if (isdigit(word[i])) {
+				valid = false;
+				break;
+			}
+		}
 
-        word = strtok(NULL, " ");
-    }
+		if (valid) {
+			count++;
+		}
 
-    return count;
+		word = strtok(NULL, " ");
+	}
+
+	delete[] strCopy;
+	return count;
 }
 
 unsigned int faStr2(const char *str) {
 unsigned int count = 0;
-    const char* word = strtok(const_cast<char*>(str), " ");
+	char* strCopy = new char[strlen(str) + 1];
+	strcpy(strCopy, str);
 
-    while (word != NULL) {
-        if (isupper(word[0])) {
-            bool valid = true;
-            for (int i = 1; i < strlen(word); i++) {
-                if (!islower(word[i]) && !isspace(word[i])) {
-                    valid = false;
-                    break;
-                }
-            }
+	char* word = strtok(strCopy, " ");
 
-            if (valid) {
-                count++;
-            }
-        }
+	while (word != NULL) {
+		if (isupper(word[0])) {
+			bool valid = true;
+			for (size_t i = 1; i < strlen(word); i++) {
+				if (!islower(word[i]) && !isspace(word[i])) {
+					valid = false;
+					break;
+				}
+			}
 
-        word = strtok(NULL, " ");
-    }
+			if (valid) {
+				count++;
+			}
+		}
 
-    return count;
+		word = strtok(NULL, " ");
+	}
+
+	delete[] strCopy;
+	return count;
 }
 
 unsigned int faStr3(const char *str) {
 unsigned int wordCount = 0;
-    unsigned int totalLength = 0;
-    const char* word = strtok(const_cast<char*>(str), " ");
+	unsigned int totalLength = 0;
+	std::istringstream iss(str);
+	std::string word;
 
-    while (word != NULL) {
-        wordCount++;
-        totalLength += strlen(word);
+	while (iss >> word) {
+		wordCount++;
+		totalLength += word.length();
+	}
 
-        word = strtok(NULL, " ");
-    }
-
-    return totalLength / wordCount;
+	return wordCount == 0 ? 0 : totalLength / wordCount;
 }
