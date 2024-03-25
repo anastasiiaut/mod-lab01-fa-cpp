@@ -9,7 +9,7 @@ unsigned int faStr1(const char* str) {
     unsigned int count = 0;
     char* strCopy = new char[strlen(str) + 1];
     snprintf(strCopy, strlen(str) + 1, "%s", str);
-    char* word = strtok_r(strCopy, " ", nullptr);
+    char* word = strtok(strCopy, " ");
     while (word != NULL) {
         bool valid = true;
         for (size_t i = 0; i < strlen(word); i++) {
@@ -21,16 +21,17 @@ unsigned int faStr1(const char* str) {
         if (valid) {
             count++;
         }
-        word = strtok_r(NULL, " ");
+        word = strtok(NULL, " ");
     }
     delete[] strCopy;
     return count;
 }
+
 unsigned int faStr2(const char* str) {
     unsigned int count = 0;
     char* strCopy = new char[strlen(str) + 1];
     snprintf(strCopy, strlen(str) + 1, "%s", str);
-    char* word = strtok_r(strCopy, " ");
+    char* word = strtok(strCopy, " ");
     while (word != NULL) {
         if (isupper(word[0])) {
             bool valid = true;
@@ -44,11 +45,12 @@ unsigned int faStr2(const char* str) {
                 count++;
             }
         }
-        word = strtok_r(nullptr, " ", nullptr);
+        word = strtok(NULL, " ");
     }
     delete[] strCopy;
     return count;
 }
+
 unsigned int faStr3(const char* str) {
     unsigned int wordCount = 0;
     unsigned int totalLength = 0;
