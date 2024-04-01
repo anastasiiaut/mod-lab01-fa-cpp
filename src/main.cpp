@@ -1,6 +1,6 @@
 Copyright 2022 UNN-IASR
-#include <iostream>
 #include "fun.h"
+#include <iostream>
 
 int main() {
     const char* ex1 = "This is a Test123 string With some 456numbers 789";
