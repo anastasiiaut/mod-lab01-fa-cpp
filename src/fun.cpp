@@ -1,72 +1,75 @@
 // Copyright 2022 UNN-IASR
-#include "fun.h"
-#include <math.h>
 #include <iostream>
+#include <cstring>
+#include <cctype>
+#include <sstream>
 
-unsigned faStr1(const char *str) {
-    bool inW = false, haveN = false;
-    int wCount = 0, i = 0;
+unsigned int faStr1(const char* str) {
+unsigned int count = 0;
+char* strCopy = new char[strlen(str) + 1];
+strcpy(strCopy, str);
 
-    while (str[i]) {
-        if (!isblank(str[i])) {
-            if (!inW) inW = true;
-            if (isdigit(str[i])) haveN = true;
-        } else {
-            if (inW) {
-                if (!haveN) wCount++;
-                inW = false;
-                haveN = false;
-            }
-        }
-        i++;
-    }
+char* word = strtok(strCopy, " ");
 
-    if (inW && !haveN) wCount++;
-    return wCount;
+while (word != NULL) {
+bool valid = true;
+for (size_t i = 0; i < strlen(word); i++) {
+if (isdigit(word[i])) {
+valid = false;
+break;
+}
 }
 
-unsigned faStr2(const char *str) {
-    bool inW = false, reject = false;
-    int wCount = 0, i = 0;
-
-    while (str[i]) {
-        if (!isblank(str[i])) {
-            if (!inW) {
-                inW = true;
-                if (!isupper(str[i])) reject = true;
-            } else {
-                if (!islower(str[i])) reject = true;
-            }
-        } else {
-            if (inW) {
-                if (!reject) wCount++;
-                inW = false;
-                reject = false;
-            }
-        }
-        i++;
-    }
-
-    if (inW && !reject) wCount++;
-    return wCount;
+if (valid) {
+count++;
 }
 
-unsigned faStr3(const char *str) {
-    bool inW = false;
-    int wCount = 0, symSum = 0, i = 0;
+word = strtok(NULL, " ");
+}
 
-    while (str[i]) {
-        if (!isblank(str[i])) {
-            if (!inW) {
-                inW = true;
-                wCount++;
-            }
-            symSum++;
-        } else {
-            if (inW) inW = false;
-        }
-        i++;
-    }
+delete[] strCopy;
+return count;
+}
 
-    return symSum / wCount;
+unsigned int faStr2(const char* str) {
+unsigned int count = 0;
+char* strCopy = new char[strlen(str) + 1];
+strcpy(strCopy, str);
+
+char* word = strtok(strCopy, " ");
+
+while (word != NULL) {
+if (isupper(word[0])) {
+bool valid = true;
+for (size_t i = 1; i < strlen(word); i++) {
+if (!islower(word[i]) && !isspace(word[i])) {
+valid = false;
+break;
+}
+}
+
+if (valid) {
+count++;
+}
+}
+
+word = strtok(NULL, " ");
+}
+
+delete[] strCopy;
+return count;
+}
+
+unsigned int faStr3(const char* str) {
+unsigned int wordCount = 0;
+unsigned int totalLength = 0;
+std::istringstream iss(str);
+std::string word;
+
+while (iss >> word) {
+wordCount++;
+totalLength += word.length();
+}
+
+return wordCount == 0 ? 0 : totalLength / wordCount;
 }
