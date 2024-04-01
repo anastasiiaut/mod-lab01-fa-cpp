@@ -7,9 +7,10 @@
 unsigned int faStr1(const char* str) {
     unsigned int count = 0;
     char* strCopy = new char[strlen(str) + 1];
-    strcpy(strCopy, str); // Corrected from snprintf to strcpy
+    snprintf(strCopy, strlen(str) + 1, "%s", str);
 
-    char* word = strtok(strCopy, " ");
+    char* saveptr;
+    char* word = strtok_r(strCopy, " ", &saveptr);
 
     while (word != NULL) {
         bool valid = true;
@@ -24,7 +25,7 @@ unsigned int faStr1(const char* str) {
             count++;
         }
 
-        word = strtok(NULL, " ");
+        word = strtok_r(NULL, " ", &saveptr);
     }
 
     delete[] strCopy;
@@ -34,9 +35,10 @@ unsigned int faStr1(const char* str) {
 unsigned int faStr2(const char* str) {
     unsigned int count = 0;
     char* strCopy = new char[strlen(str) + 1];
-    strcpy(strCopy, str); // Corrected from snprintf to strcpy
+    snprintf(strCopy, strlen(str) + 1, "%s", str);
 
-    char* word = strtok(strCopy, " ");
+    char* saveptr;
+    char* word = strtok_r(strCopy, " ", &saveptr);
 
     while (word != NULL) {
         if (isupper(word[0])) {
@@ -53,7 +55,7 @@ unsigned int faStr2(const char* str) {
             }
         }
 
-        word = strtok(NULL, " ");
+        word = strtok_r(NULL, " ", &saveptr);
     }
 
     delete[] strCopy;
