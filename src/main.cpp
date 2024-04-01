@@ -1,4 +1,4 @@
-Copyright 2022 UNN-IASR
+//Copyright 2022 UNN-IASR
 #include "fun.h"
 #include <iostream>
 
