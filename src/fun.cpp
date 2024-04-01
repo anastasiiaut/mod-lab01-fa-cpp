@@ -7,9 +7,9 @@
 unsigned int faStr1(const char* str) {
 unsigned int count = 0;
 char* strCopy = new char[strlen(str) + 1];
-strcpy(strCopy, str);
+snprintf(strCopy, str);
 
-char* word = strtok(strCopy, " ");
+char* word = strtok_r(strCopy, " ");
 
 while (word != NULL) {
 bool valid = true;
@@ -24,7 +24,7 @@ if (valid) {
 count++;
 }
 
-word = strtok(NULL, " ");
+word = strtok_r(NULL, " ");
 }
 
 delete[] strCopy;
@@ -34,9 +34,9 @@ return count;
 unsigned int faStr2(const char* str) {
 unsigned int count = 0;
 char* strCopy = new char[strlen(str) + 1];
-strcpy(strCopy, str);
+snprintf(strCopy, str);
 
-char* word = strtok(strCopy, " ");
+char* word = strtok_r(strCopy, " ");
 
 while (word != NULL) {
 if (isupper(word[0])) {
@@ -53,7 +53,7 @@ count++;
 }
 }
 
-word = strtok(NULL, " ");
+word = strtok_r(NULL, " ");
 }
 
 delete[] strCopy;
